@@ -31,4 +31,4 @@ jobs:
             rm -rf src/test
             gradle build
             docker build -t wjdqsdlsp/road-helper:$VERSION .
-            docker push wjdqlsdlsp/semogong:$VERSION
+            docker push wjdqlsdlsp/road-helper:$VERSION
