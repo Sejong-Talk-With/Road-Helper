@@ -30,6 +30,5 @@ jobs:
             VERSION=${VERSION_SPLIT[2]}
             rm -rf src/test
             gradle build
-            cp build/libs/transport-0.0.1-SNAPSHOT.jar target/
             docker build -t wjdqsdlsp/road-helper:$VERSION .
             docker push wjdqlsdlsp/semogong:$VERSION
