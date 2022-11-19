@@ -30,5 +30,7 @@ jobs:
             VERSION=${VERSION_SPLIT[2]}
             rm -rf src/test
             gradle build
-            docker build -t wjdqsdlsp/road-helper:$VERSION .
+            docker build -t road-helper:0.1 .
+            images_id=$(docker images -qa road-helper:0.1)
+            docker tag $images_id wjdqlsdlsp/road-helper:$VERSION
             docker push wjdqlsdlsp/road-helper:$VERSION
