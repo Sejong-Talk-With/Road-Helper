@@ -1,11 +1,11 @@
 name: gradle and docker
 
 on:
-  workflow_dispatch:
-    tag:
-      description: 'description'
-      required: false
-      type: string
+ push:
+   branches:
+     - master
+   paths:
+     - 'argo/*'
 
 jobs:
   build: 
