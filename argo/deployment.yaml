@@ -18,6 +18,3 @@ spec:
         image: wjdqlsdlsp/road-helper:0.0.1
         ports:
         - containerPort: 8080
-        envFrom:
-        - configMapRef:
-            name: config-dev
