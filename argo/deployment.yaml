@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: road-helper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: road-helper-web
+  template:
+    metadata:
+      name: road-helper-pod
+      labels:
+        app: road-helper-web
+    spec:
+      containers:
+      - name: road-helper-container
+        image: wjdqlsdlsp/road-helper:0.0.2
+        ports:
+        - containerPort: 8080
