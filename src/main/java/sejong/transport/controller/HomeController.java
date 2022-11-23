@@ -12,6 +12,7 @@ import sejong.transport.domain.etc.UserType;
 import sejong.transport.domain.etc.usertype.Elder;
 import sejong.transport.domain.etc.usertype.Pregnant;
 import sejong.transport.domain.etc.usertype.Wheel;
+import sejong.transport.service.RoadService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
+
+    private final RoadService roadService;
 
     @GetMapping("/")
     public String home(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
@@ -30,6 +33,7 @@ public class HomeController {
     @PostMapping("/")
     public String homeSearch(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
         System.out.println("searchForm = " + searchForm);
+        roadService.findRoad(searchForm);
         return "result";
     }
 
