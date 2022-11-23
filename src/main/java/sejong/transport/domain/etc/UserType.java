@@ -5,7 +5,6 @@ import sejong.transport.domain.etc.Times;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserType {
     private final String type = "유형을 선택해주세요";
     private final double rate = 1;

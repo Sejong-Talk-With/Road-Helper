@@ -3,12 +3,14 @@ package sejong.transport.domain.etc.usertype;
 import lombok.*;
 import sejong.transport.domain.etc.Times;
 import sejong.transport.domain.etc.UserType;
+import sejong.transport.domain.etc.UserTypeConst;
+
+import static sejong.transport.domain.etc.UserTypeConst.pregnant;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Pregnant extends UserType {
-    private final String type = "임산부";
+    private final String type = pregnant;
     private final double rate = 1.3;
 
     @Override

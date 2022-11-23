@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import sejong.transport.domain.etc.Times;
 import sejong.transport.domain.etc.UserType;
+import sejong.transport.domain.etc.UserTypeConst;
+
+import static sejong.transport.domain.etc.UserTypeConst.elder;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Elder extends UserType {
-    private final String type = "노약자";
+    private final String type = elder;
     private final double rate = 1.6;
 
     @Override

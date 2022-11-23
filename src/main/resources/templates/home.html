@@ -30,11 +30,10 @@
                         <input th:field="*{end}" class="form-control form-control-lg" type="text" placeholder="도착하는 위치를 입력하세요!">
                     </label>
                 </div>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected value="0">Choose the type</option>
-                    <option value="1">임산부</option>
-                    <option value="2">휠체어</option>
-                    <option value="3">노약자</option>
+                <select th:field="*{type}" class="form-select">
+                    <option th:each="type : ${types}"
+                            th:value="${type.type}"
+                            th:text="${type.type}">타입</option>
                 </select>
                 <button type="submit" class="btn btn-primary col-auto">교통약자 전용 길찾기</button>
             </form>
