@@ -29,6 +29,9 @@ public class RoadService {
             Point start = searchPlace(searchForm.start);
             Point end = searchPlace(searchForm.end);
             searchRoad(start, end);
+            System.out.println("start = " + start);
+            System.out.println("end= " + end);
+
         }catch(Exception e){
             e.printStackTrace();
         }
