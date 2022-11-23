@@ -19,6 +19,7 @@ public class HomeController {
 
     @PostMapping("/")
     public String homeSearch(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
+
         return "result";
     }
 
