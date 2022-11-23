@@ -1,9 +1,15 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/transport # jdbc:mysql://${DB_URL}:3306/___
-    username: park # ${DB_NAME}
-    password: # ${DB_PASSWORD}
-    driver-class-name: org.h2.Driver #com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_URL}:3306/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#   datasource:
+#     url: jdbc:h2:tcp://localhost/~/transport # jdbc:mysql://${DB_URL}:3306/___
+#     username: park # ${DB_NAME}
+#     password: # ${DB_PASSWORD}
+#     driver-class-name: org.h2.Driver #com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
