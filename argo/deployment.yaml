@@ -15,6 +15,9 @@ spec:
     spec:
       containers:
       - name: road-helper-container
-        image: wjdqlsdlsp/road-helper:0.0.3
+        image: wjdqlsdlsp/road-helper:0.0.5
         ports:
         - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: config-dev
