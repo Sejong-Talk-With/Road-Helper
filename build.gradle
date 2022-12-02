@@ -40,6 +40,11 @@ dependencies {
 	// Querydsl
 	implementation "com.querydsl:querydsl-jpa:5.0.0"
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0"
+
+	// 크롤링
+	implementation 'org.jsoup:jsoup:1.14.2'
+	implementation 'org.seleniumhq.selenium:selenium-java:4.6.0'
+
 }
 
 tasks.named('test') {

@@ -1,5 +1,6 @@
 package sejong.transport.controller;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
-
     @GetMapping("/")
     public String home(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
         List<UserType> types = new ArrayList<>(List.of(new UserType(),new Wheel(), new Pregnant(), new Elder()));
@@ -29,8 +29,57 @@ public class HomeController {
 
     @PostMapping("/")
     public String homeSearch(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
-        System.out.println("searchForm = " + searchForm);
-        return "result";
+        model.addAttribute("start", searchForm.start);
+        model.addAttribute("end", searchForm.end);
+
+        List<Route> allRoutes = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Route route = new Route("세종대학교 정문","어린이대공원역 1번 출구","근처 엘레베이터를 이용하세요",50,i%2,10);
+            allRoutes.add(route);
+        }
+        model.addAttribute("allRoutes", allRoutes);
+
+        model.addAttribute("optimal","15:00");
+
+        return "search";
     }
+
+    @GetMapping("/detail")
+    public String detailSearch(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
+
+        Route singleRoutes = new Route("세종대학교 정문","어린이대공원역 1번 출구","근처 엘레베이터를 이용하세요",50,0,10);
+        model.addAttribute("singleRoutes", singleRoutes);
+
+        List<Route> allRoutes = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Route route = new Route("횡단보도","1번 출구 근처 엘레베이터","예상 시간 5분",50,i,10);
+            allRoutes.add(route);
+        }
+        model.addAttribute("allRoutes", allRoutes);
+        return "detail";
+
+    }
+
+
+    @Data
+    static class Route {
+        public String start;
+        public String end;
+        public String description;
+        public int distance;
+        public int odd;
+        public int time;
+
+        public Route(String start, String end, String description, int distance, int odd, int time) {
+            this.start = start;
+            this.end = end;
+            this.description = description;
+            this.distance = distance;
+            this.odd = odd;
+            this.time = time;
+        }
+    }
+
+
 
 }

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" xmlns="" class="w-100 h-100 d-sm-flex justify-content-center">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>교통약자를 위한 대중교통 이용 안내</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!-- Font -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'NanumSquare', serif !important;
+        }
+
+        .back-color1 {
+            background-color: rgb(230, 230, 230);
+        }
+
+        .back-color2 {
+            background-color: rgb(215, 215, 215);
+        }
+
+        .back-color3 {
+            background-color: rgb(150, 100, 100);
+        }
+
+        .back-color4 {
+            background-color: rgb(255, 255, 255);
+        }
+
+
+        .text-color1 {
+            color: rgb(150, 100, 100);
+        }
+
+        .text-color2 {
+            color: rgb(120, 120, 120);
+        }
+
+        .box::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera*/
+        }
+
+        .ani1{
+            transition: all 0.2s linear;
+        }
+        .ani1:hover{
+            border: solid rgb(150,100,100) 3px;
+        }
+
+        @media (min-width: 501px) {
+            body{
+                width:  500px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            body{
+                width: 100%;
+            }
+        }
+
+        p{
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body class="h-100">
+<div class="h-100 w-100 back-color1 p-4">
+    <nav class="navbar navbar-expand-lg justify-content-end w-100 mb-2">
+        <div class="dropstart">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list"
+                     viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="w-100" th:object="${searchForm}">
+        <p class="text-center text-color1 fs-3 fw-bold my-2" th:text="|${searchForm.start} -> ${searchForm.end}|" >출발지 -> 도착지</p>
+        <p class="text-center text-color2 fs-6 fw-bold" th:text="|최적 출발 시간 : ${optimal}|"></p>
+    </div>
+
+    <div class="h-75 w-100 overflow-scroll box col">
+        <div class="container text-center">
+            <th:block th:each="path :${allRoutes}">
+            <div class="row back-color2 p-2 my-2 ani1 accordion"  th:if="${path.odd % 2 == 0}">
+                <div class="col-10 text-start">
+                    <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
+                    <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
+                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                </div>
+                <div class="col-2 align-self-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="row back-color4 p-2 my-2 ani1" th:if="${path.odd % 2 != 0}">
+                <div class="col-10 text-start">
+                    <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
+                    <p class="text-color2 text-truncate fs-6" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
+                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                </div>
+                <div class="col-2 align-self-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </div>
+            </div>
+
+            </th:block>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+</html>
