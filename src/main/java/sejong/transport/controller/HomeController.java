@@ -37,8 +37,15 @@ public class HomeController {
             Route route = new Route("세종대학교 정문","어린이대공원역 1번 출구","근처 엘레베이터를 이용하세요",50,i%2,10);
             allRoutes.add(route);
         }
-        model.addAttribute("allRoutes", allRoutes);
 
+        List<Route> detailRoutes = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Route detail = new Route("세종대학교 정문","어린이대공원역 1번 출구","근처 엘레베이터를 이용하세요",50,i%2,10);
+            detailRoutes.add(detail);
+        }
+
+        model.addAttribute("allRoutes", allRoutes);
+        model.addAttribute("detailRoutes", detailRoutes);
         model.addAttribute("optimal","15:00");
 
         return "search";
@@ -55,7 +62,15 @@ public class HomeController {
             Route route = new Route("횡단보도","1번 출구 근처 엘레베이터","예상 시간 5분",50,i,10);
             allRoutes.add(route);
         }
+
+        List<Route> detailRoutes = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Route detail = new Route("횡단보도","1번 출구 근처 엘레베이터","예상 시간 5분",50,i,10);
+            detailRoutes.add(detail);
+        }
+
         model.addAttribute("allRoutes", allRoutes);
+        model.addAttribute("detailRoutes", detailRoutes);
         return "detail";
 
     }
