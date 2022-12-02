@@ -82,17 +82,12 @@
         div.title{
             width: 100%;
             box-sizing: border-box;
-            padding: 0 10px;
         }
 
         .con{
-            padding: 20px;
             display:none;
         }
 
-        .arrow.down{
-            transform: rotate(-180deg);
-        }
 
     </style>
 </head>
@@ -140,7 +135,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="con">
+                            <div class="con back-color4 p-2">
                                 <div class="col-10 text-start">
                                     <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
                                     <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
@@ -156,8 +151,8 @@
                             <div class="row back-color4 p-2 my-2 ani1 accordion title">
                                 <div class="col-10 text-start">
                                     <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
-                                    <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
-                                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                                    <p class="text-color2 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
+                                    <p class="text-truncate" th:text="|거리: ${path.distance} m|">0</p>
                                 </div>
                                 <div class="col-2 align-self-center arrow_box justify-content-center m-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-down arrow" viewBox="0 0 16 16">
@@ -165,11 +160,11 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="con">
+                            <div class="con  back-color2">
                                 <div class="col-10 text-start">
                                     <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
-                                    <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
-                                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                                    <p class="text-color2 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
+                                    <p class="text-truncate" th:text="|거리: ${path.distance} m|">0</p>
                                 </div>
                             </div>
                         </li>
