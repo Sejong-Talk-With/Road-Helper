@@ -11,6 +11,8 @@
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+
     <style>
         body {
             font-family: 'NanumSquare', serif !important;
@@ -49,7 +51,7 @@
             transition: all 0.2s linear;
         }
         .ani1:hover{
-            border: solid rgb(150,100,100) 3px;
+            box-shadow: 0px 0px 0px 2px rgb(150,100,100);
         }
 
         @media (min-width: 501px) {
@@ -67,6 +69,31 @@
         p{
             margin: auto;
         }
+
+        ul{
+            list-style: none;
+        }
+
+        .accordion-box{
+            width: 100%;
+            margin:  0 auto;
+        }
+
+        div.title{
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+
+        .con{
+            padding: 20px;
+            display:none;
+        }
+
+        .arrow.down{
+            transform: rotate(-180deg);
+        }
+
     </style>
 </head>
 
@@ -98,32 +125,56 @@
     <div class="h-75 w-100 overflow-scroll box col">
         <div class="container text-center">
             <th:block th:each="path :${allRoutes}">
-            <div class="row back-color2 p-2 my-2 ani1 accordion"  th:if="${path.odd % 2 == 0}">
-                <div class="col-10 text-start">
-                    <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
-                    <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
-                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                <div class="accordion-box" th:if="${path.odd % 2 == 0}">
+                    <ul class="list">
+                        <li>
+                            <div class="row back-color2 p-2 my-2 ani1 accordion title">
+                                <div class="col-10 text-start">
+                                    <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
+                                    <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
+                                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                                </div>
+                                <div class="col-2 align-self-center arrow_box justify-content-center m-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-down arrow" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="con">
+                                <div class="col-10 text-start">
+                                    <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
+                                    <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
+                                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-2 align-self-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
+                <div class="accordion-box" th:if="${path.odd % 2 != 0}">
+                    <ul class="list">
+                        <li>
+                            <div class="row back-color4 p-2 my-2 ani1 accordion title">
+                                <div class="col-10 text-start">
+                                    <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
+                                    <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
+                                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                                </div>
+                                <div class="col-2 align-self-center arrow_box justify-content-center m-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-down arrow" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="con">
+                                <div class="col-10 text-start">
+                                    <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
+                                    <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
+                                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-
-            <div class="row back-color4 p-2 my-2 ani1" th:if="${path.odd % 2 != 0}">
-                <div class="col-10 text-start">
-                    <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|" >출발지 -> 도착지</p>
-                    <p class="text-color2 text-truncate fs-6" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
-                    <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
-                </div>
-                <div class="col-2 align-self-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                </div>
-            </div>
-
             </th:block>
         </div>
     </div>
@@ -133,5 +184,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+
+<script>
+    $("div.title").on('click',function(){
+        $(this).next(".con").slideToggle(50);
+        $(".arrow").toggleClass("down");
+    });
+</script>
 </body>
 </html>
