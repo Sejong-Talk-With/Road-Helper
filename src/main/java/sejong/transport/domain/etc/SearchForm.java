@@ -14,6 +14,8 @@ public class SearchForm {
 
     public String start;
     public String end;
+    public String time1;
+    public String time2;
     public String type;
     public UserType userType;
 

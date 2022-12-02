@@ -21,10 +21,10 @@ public class Elevator {
     private long id;
     private String stationName;
     private int exitNum;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
 
-    public static Elevator create(String stationName, int exitNum, float latitude, float longitude) {
+    public static Elevator create(String stationName, int exitNum, double latitude, double longitude) {
         Elevator elevator = new Elevator();
         elevator.stationName = stationName;
         elevator.exitNum = exitNum;

@@ -41,14 +41,14 @@
                 width: 100%;
             }
         }
-
     </style>
 </head>
-<body class="h-100">
-<div class="h-100 w-100 back-color1 p-4">
 
-    <nav class="navbar navbar-expand-lg justify-content-end w-100 mb-5">
-        <div class="dropdown">
+<body class="h-100">
+<div class="h-100 w-100 back-color1 p-4" >
+    <div class="container"></div>
+    <nav class="navbar navbar-expand-lg justify-content-end w-100 mb-2">
+        <div class="dropstart">
             <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
@@ -62,10 +62,10 @@
         </div>
     </nav>
 
-    <div class="text-center w-100">
-        <p class="text-color1 mb-5 fs-5 fw-bold">원하는 출발지점과 도착지점을 검색하세요!</p>
+    <div class="text-center">
+        <p class="text-color1 mb-5 fs-6 fw-bold">원하는 출발지점과 도착지점을 검색하세요!</p>
 
-        <form class="w-100" method="post" th:object="${searchForm}">
+        <form class="w-100"  method="post" th:object="${searchForm}">
 
             <p class="text-color1 fs-5 m-0">출발 지점</p>
             <div class="d-sm-flex w-100 justify-content-center mb-3">
@@ -76,7 +76,7 @@
                         </svg>
                     </span>
                     <input th:field="*{start}" type="text" class="form-control form-control-lg back-color2 text-center w-50 m-0" placeholder="출발지를 입력해주세요!" aria-label="Username" aria-describedby="basic-addon1">
-                    <span class="input-group-text back-color2 border-0" id="basic-addon1">
+                    <span class="input-group-text back-color2 border-0" id="basic-addon1-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                         </svg>
@@ -84,28 +84,40 @@
                 </div>
             </div>
 
-
             <p class="text-color1 fs-5 m-0">도착 지점</p>
-            <div class="w-100 d-sm-flex justify-content-center mb-4">
+            <div class="w-100 d-sm-flex justify-content-center mb-2">
                 <div class="input-group mb-3 d-sm-flex  justify-content-center">
-                    <span class="input-group-text back-color2 border-0" id="basic-addon1">
+                    <span class="input-group-text back-color2 border-0" id="basic-addon2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
                             <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                         </svg>
                     </span>
                     <input th:field="*{end}" type="text" class="form-control form-control-lg back-color2 text-center w-50" placeholder="목적지를 입력해주세요!" aria-label="Username" aria-describedby="basic-addon1">
-                    <span class="input-group-text back-color2 border-0" id="basic-addon1">
+                    <span class="input-group-text back-color2 border-0" id="basic-addon2-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                         </svg>
                     </span>
+                </div>
+            </div>
+
+            <p class="text-color1 fs-5 m-0 mb-1">출발 희망 시간</p>
+            <div class="d-sm-flex justify-content-center w-100 mb-3 container">
+                <div class="row">
+                    <div class="input-group flex-nowrap col">
+                        <input th:field="*{time1}" type="text" class="form-control" aria-label="Username" aria-describedby="addon-wrapping">
+                    </div>
+                    <div class="text-color1 fs-5 m-0 w-25 col">~</div>
+                    <div class="input-group flex-nowrap col">
+                        <input th:field="*{time2}" type="text" class="form-control" aria-label="Username" aria-describedby="addon-wrapping">
+                    </div>
                 </div>
             </div>
 
             <p class="text-color1 fs-5 m-0">교통 약자 유형</p>
             <div class="d-sm-flex justify-content-center mb-4">
                 <div class="input-group mb-3">
-                    <select th:field="*{type}" class="form-select back-color2 text-center fs-6 fw-bold">
+                    <select th:field="*{type}" class="form-select back-color2 text-center fw-bold">
                         <option th:each="type : ${types}"
                                 th:value="${type.type}"
                                 th:text="${type.type}">장애인
@@ -114,7 +126,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary col-auto back back-color3 border-0 text-center" style="margin-top: 100px;">길찾기 시작</button>
+            <button type="submit" class="btn btn-primary col-auto back back-color3 border-0 text-center">길찾기 시작</button>
         </form>
     </div>
 
