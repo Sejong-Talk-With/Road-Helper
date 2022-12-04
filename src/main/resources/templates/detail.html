@@ -127,7 +127,8 @@
     </div>
 
     <div class="w-100 h-50 box overflow-scroll">
-        <img src="https://map2.daumcdn.net/map_2d_hd/2209kdm/L2/3983/1846.png">
+<!--        <img src="https://map2.daumcdn.net/map_2d_hd/2209kdm/L2/3983/1846.png">-->
+        <img src="C:\Users\jaehoon\IdeaProjects\Road-Helper\src\main\resources\image\example.png">
     </div>
 
     <div class="row my-2">
@@ -137,16 +138,26 @@
 
     <div class="h-25 w-100 overflow-scroll box col">
         <div class="container text-center">
-            <th:block th:each="path :${allRoutes}">
-                <div class="row back-color2 p-2 ani1" th:if="${path.odd % 2 >= 0}">
-                    <div class="col-10 text-start">
-                        <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|">출발지 -> 도착지</p>
-                        <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
-                        <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
-                    </div>
+            <th:block th:each="path :${detailRoutes}">
+                <div class="row back-color4 p-2 ani1" th:if="${(path.odd+1) % 2 != 0}">
                     <div class="col-2 align-self-center">
                         <div th:text="${path.odd+1}"></div>
                     </div>
+                    <div class="col-10 text-start">
+                        <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|">출발지 -> 도착지</p>
+                        <p class="text-color2 fs-6 text-truncate" th:text="| ${path.distance}m 이동, ${path.description}|">0분 소요</p>
+                    </div>
+
+                </div>
+                <div class="row back-color4 p-2 ani1" th:if="${(path.odd+1) % 2 == 0}">
+                    <div class="col-2 align-self-center">
+                        <div th:text="${path.odd+1}"></div>
+                    </div>
+                    <div class="col-10 text-start">
+                        <p class="fw-bold text-truncate" th:text="|${path.start}|">출발지</p>
+                        <p class="text-color2 fs-6 text-truncate" th:text="| ${path.distance}m 이동, ${path.description}|">0분 소요</p>
+                    </div>
+
                 </div>
 
             </th:block>

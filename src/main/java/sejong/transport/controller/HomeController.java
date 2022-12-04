@@ -68,13 +68,28 @@ public class HomeController {
         }
 
         List<Route> detailRoutes = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            Route detail = new Route("횡단보도","1번 출구 근처 엘레베이터","예상 시간 5분",50,i,10);
-            detailRoutes.add(detail);
+        for (int i = 0; i < 3; i++) {
+            if(i==0) {
+                Route detail = new Route("세종대학교 정문", "횡단보도", "3분 소요", 40, i, 3);
+                detailRoutes.add(detail);
+            }
+            else if (i==1) {
+                Route detail = new Route("횡단보도 통행", "", "1분 소요", 20, i, 1);
+                detailRoutes.add(detail);
+            }
+            else if (i==2) {
+                Route detail = new Route("횡단보도", "1번 출구 근처 엘레베이터", "3분 소요", 40, i, 3);
+                detailRoutes.add(detail);
+            }
+
+
         }
+
 
         model.addAttribute("allRoutes", allRoutes);
         model.addAttribute("detailRoutes", detailRoutes);
+
+
         return "detail";
 
     }
