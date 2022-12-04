@@ -121,26 +121,29 @@
                 <div class="accordion-box">
                     <ul class="list">
                         <li>
-                            <div class="row back-color4 p-2 my-2 ani1 accordion title">
+                            <div class="row back-color4 p-2 my-2 ani1 accordion title" >
                                 <div class="col-10 text-start">
                                     <p class="fw-bold text-truncate" th:text="${path.title}">출발지 -> 도착지</p>
                                     <p class="text-color2 fs-6 text-truncate" th:utext="${path.description}">근처 엘레베이터를 이용하세요</p>
                                 </div>
 
-                                <div class="col-2 align-self-center arrow_box justify-content-center m-0" th:if="${path.trafficType=='bus'}">
+                                <a class="col-2 align-self-center arrow_box justify-content-center m-0" th:if="${path.trafficType=='bus'}" th:href="@{/detail/bus (sId=${path.route.start.id}, sLongitude=${path.route.start.longitude},  sLatitude=${path.route.start.latitude}, sName=${path.route.start.name},
+                                eId=${path.route.end.id}, eLongitude=${path.route.end.longitude},  eLatitude=${path.route.end.latitude}, eName=${path.route.end.name}, userType=${userType.type})}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bus-front" viewBox="0 0 20 20">
                                         <path d="M5 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-6-1a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H7Zm1-6c-1.876 0-3.426.109-4.552.226A.5.5 0 0 0 3 4.723v3.554a.5.5 0 0 0 .448.497C4.574 8.891 6.124 9 8 9c1.876 0 3.426-.109 4.552-.226A.5.5 0 0 0 13 8.277V4.723a.5.5 0 0 0-.448-.497A44.303 44.303 0 0 0 8 4Zm0-1c-1.837 0-3.353.107-4.448.22a.5.5 0 1 1-.104-.994A44.304 44.304 0 0 1 8 2c1.876 0 3.426.109 4.552.226a.5.5 0 1 1-.104.994A43.306 43.306 0 0 0 8 3Z"/>
                                         <path d="M15 8a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1V2.64c0-1.188-.845-2.232-2.064-2.372A43.61 43.61 0 0 0 8 0C5.9 0 4.208.136 3.064.268 1.845.408 1 1.452 1 2.64V4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v3.5c0 .818.393 1.544 1 2v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5V14h6v1.5a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2c.607-.456 1-1.182 1-2V8ZM8 1c2.056 0 3.71.134 4.822.261.676.078 1.178.66 1.178 1.379v8.86a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5V2.64c0-.72.502-1.301 1.178-1.379A42.611 42.611 0 0 1 8 1Z"/>
                                     </svg>
-                                </div>
-                                <div class="col-2 align-self-center arrow_box justify-content-center m-0" th:if="${path.trafficType=='subway'}">
+                                </a>
+                                <a class="col-2 align-self-center arrow_box justify-content-center m-0" th:if="${path.trafficType=='subway'}" th:href="@{/detail/subway (sId=${path.route.start.id}, sLongitude=${path.route.start.longitude},  sLatitude=${path.route.start.latitude}, sName=${path.route.start.name},
+                                eId=${path.route.end.id}, eLongitude=${path.route.end.longitude},  eLatitude=${path.route.end.latitude}, eName=${path.route.end.name}, userType=${userType.type})}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-train-front-fill" viewBox="0 0 20 20">
                                         <path d="M10.621.515C8.647.02 7.353.02 5.38.515c-.924.23-1.982.766-2.78 1.22C1.566 2.322 1 3.432 1 4.582V13.5A2.5 2.5 0 0 0 3.5 16h9a2.5 2.5 0 0 0 2.5-2.5V4.583c0-1.15-.565-2.26-1.6-2.849-.797-.453-1.855-.988-2.779-1.22ZM6.5 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1Zm-2 2h7A1.5 1.5 0 0 1 13 5.5v2A1.5 1.5 0 0 1 11.5 9h-7A1.5 1.5 0 0 1 3 7.5v-2A1.5 1.5 0 0 1 4.5 4Zm.5 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-3-1a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM4 5.5a.5.5 0 0 1 .5-.5h3v3h-3a.5.5 0 0 1-.5-.5v-2ZM8.5 8V5h3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-3Z"/>
                                     </svg>
-                                </div>
-                                <div class="col-2 align-self-center arrow_box justify-content-center m-0" th:if="${path.trafficType=='walking'}">
+                                </a>
+                                <a class="col-2 align-self-center arrow_box justify-content-center m-0" th:if="${path.trafficType=='walking'}"  th:href="@{/detail/walking (sId=${path.route.start.id}, sLongitude=${path.route.start.longitude},  sLatitude=${path.route.start.latitude}, sName=${path.route.start.name},
+                                eId=${path.route.end.id}, eLongitude=${path.route.end.longitude},  eLatitude=${path.route.end.latitude}, eName=${path.route.end.name}, userType=${userType.type})}">
                                     <img src="https://cdn-icons-png.flaticon.com/128/6591/6591691.png" width="20" height="20">
-                                </div>
+                                </a>
 
                             </div>
 
@@ -152,11 +155,11 @@
                                             <p class="text-color2 fs-6 text-truncate" th:utext="${subway.description}">근처 엘레베이터를 이용하세요</p>
                                         </div>
 
-                                        <div class="col-2 align-self-center arrow_box justify-content-center m-0" >
+                                        <a class="col-2 align-self-center arrow_box justify-content-center m-0" href="">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                                             </svg>
-                                        </div>
+                                        </a>
                                     </div>
                                 </th:block>
                             </div>

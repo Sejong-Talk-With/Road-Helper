@@ -13,6 +13,7 @@ import sejong.transport.domain.etc.traffictype.Walking;
 import sejong.transport.domain.etc.usertype.Elder;
 import sejong.transport.domain.etc.usertype.Pregnant;
 import sejong.transport.domain.etc.usertype.Wheel;
+import sejong.transport.service.DetailRoadService;
 import sejong.transport.service.RoadService;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.util.List;
 public class HomeController {
 
     private final RoadService roadService;
+    private final DetailRoadService detailRoadService;
 
     @GetMapping("/")
     public String home(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
@@ -41,6 +43,7 @@ public class HomeController {
         model.addAttribute("end", end.name);
         model.addAttribute("optimal", "15:00");
         model.addAttribute("allRoutes", allRoutes);
+        model.addAttribute("userType", searchForm.getUserType());
 
         for (RouteDetail allRoute : allRoutes) {
             System.out.println("allRoute = " + allRoute);
@@ -53,27 +56,15 @@ public class HomeController {
     public String detailSearch(@RequestParam(name = "sId") Long startId, @RequestParam(name = "sLongitude") Double startLong,
                                @RequestParam(name = "sLatitude") Double startLat, @RequestParam(name = "sName") String startName,
                                @RequestParam(name = "eId") Long endId, @RequestParam(name = "eLongitude") Double endLong,
-                               @RequestParam(name = "eLatitude") Double endLat, @RequestParam(name = "eName") String endName, Model model) {
+                               @RequestParam(name = "eLatitude") Double endLat, @RequestParam(name = "eName") String endName,
+                               @RequestParam(name = "userType") String type, Model model) throws IOException, ParseException {
 
-
-
-
-//        model.addAttribute("singleRoutes", singleRoutes);
-
-        List<Route> allRoutes = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            Route route = new Route("횡단보도","1번 출구 근처 엘레베이터","예상 시간 5분",50,i,10);
-            allRoutes.add(route);
-        }
-
-        List<Route> detailRoutes = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            Route detail = new Route("횡단보도","1번 출구 근처 엘레베이터","예상 시간 5분",50,i,10);
-            detailRoutes.add(detail);
-        }
-
-        model.addAttribute("allRoutes", allRoutes);
-        model.addAttribute("detailRoutes", detailRoutes);
+        Point start = new Point(startId, startName, startLong, startLat);
+        Point end = new Point(endId, endName, endLong, endLat);
+        SearchForm temp = new SearchForm();
+        temp.setType(type);
+        ResultDetail walkingDetail = detailRoadService.findWalkingDetail(start, end, temp.getUserType());
+        model.addAttribute("routeDetail", walkingDetail);
         return "detail";
 
     }
