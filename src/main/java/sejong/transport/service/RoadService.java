@@ -42,7 +42,7 @@ public class RoadService {
         return originalRoutes;
     }
 
-    private Route makeBestWalkingRoute(Route route, UserType userType) throws IOException, ParseException {
+    private void makeBestWalkingRoute(Route route, int i, List<Route> allRoutes, UserType userType) throws IOException, ParseException {
         Point start = route.getStart();
         Point end = route.getEnd();
         String startName = start.getName();
@@ -52,7 +52,7 @@ public class RoadService {
             int exitNum = 0;
             List<Elevator> elevators = elevatorService.findByStationName(startName);
             if (elevators.size() == 0) {
-                return route;
+                return;
             }
             Double latitude = end.getLatitude();
             Double longitude = end.getLongitude();
@@ -73,7 +73,8 @@ public class RoadService {
                     System.out.println("exitNum = " + exitNum);
                 }
             }
-            route.setExitNum(String.valueOf(exitNum));
+            Route beforeRoute = allRoutes.get(i - 1);
+            beforeRoute.setOutExitNum(String.valueOf(exitNum));
             String startPlace = startName + " " + String.valueOf(exitNum);
             System.out.println("startPlace = " + startPlace);
             Point newStart = searchPlace(startPlace);
@@ -84,7 +85,7 @@ public class RoadService {
             int exitNum = 0;
             List<Elevator> elevators = elevatorService.findByStationName(endName);
             if (elevators.size() == 0) {
-                return route;
+                return;
             }
             Double latitude = start.getLatitude();
             Double longitude = start.getLongitude();
@@ -107,14 +108,15 @@ public class RoadService {
                     System.out.println("exitNum = " + exitNum);
                 }
             }
-            route.setExitNum(String.valueOf(exitNum));
+            Route afterRoute = allRoutes.get(i + 1);
+            afterRoute.setInExitNum(String.valueOf(exitNum));
             String endPlace = endName + " " + String.valueOf(exitNum) + "번출구";
             System.out.println("endPlace = " + endPlace);
             Point newEnd = searchPlace(endPlace);
             route.setEnd(newEnd);
         }
 
-        return route;
+        return;
     }
 
     // 장소 검색 (출발지 검색, 도착지 검색)
@@ -209,15 +211,22 @@ public class RoadService {
         RouteDetail subway = null;
         List<StationDetail> subwayList = new ArrayList<>();
         boolean check = Boolean.TRUE;
-        for (Route route : allRoutes) {
+        for (int i = 0; i < allRoutes.size(); i++) {
+            Route route = allRoutes.get(i);
+            if (route instanceof Walking) {
+                makeBestWalkingRoute(route, i, allRoutes, userType);
+            }
+        }
+        for (int i = 0; i < allRoutes.size(); i++) {
+            Route route = allRoutes.get(i);
             if (route instanceof Subway) {
                 RouteDetail routeDetail = new RouteDetail(route);
                 if (check) {
                     subway = routeDetail;
                     subwayList = subway.getSubwayDetails();
-                    subwayList.add(new StationDetail(route, true));
+                    subwayList.add(new StationDetail(route,routeDetail, true));
                     check = Boolean.FALSE;
-                    subwayList.add(new StationDetail(route, false));
+                    subwayList.add(new StationDetail(route,routeDetail, false));
                     allRouteDetails.add(subway);
                 } else {
                     String description = subway.getDescription();
@@ -227,17 +236,17 @@ public class RoadService {
                     subway.setStationCnt(subway.getStationCnt() + route.getStationCnt() - 1);
                     String before = subway.getTitle();
                     subway.setTitle(before + " → " + route.getEnd().getName());
-                    subwayList.add(new StationDetail(route, false));
+                    subwayList.add(new StationDetail(route,routeDetail, false));
                 }
             } else {
+                RouteDetail routeDetail;
                 if (route instanceof Walking) {
-                    Route route1 = makeBestWalkingRoute(route, userType);
-                    Route newRoute = searchWalk(route1.getStart(), route1.getEnd(), userType);
-                    RouteDetail routeDetail = new RouteDetail(newRoute);
+                    Route newRoute = searchWalk(route.getStart(), route.getEnd(), userType);
+                    routeDetail = new RouteDetail(newRoute);
                 } else {
-                    RouteDetail routeDetail = new RouteDetail(route);
+                    routeDetail = new RouteDetail(route);
                 }
-                allRouteDetails.add(new RouteDetail(route));
+                allRouteDetails.add(routeDetail);
             }
         }
         if (subway != null) {
@@ -247,16 +256,19 @@ public class RoadService {
             lastStation.setTitle(String.format("%s 안내도 (%s호선 %s) ", lastStation.getName(),lastStation.getLine(), lastStation.getSubwayType()));
             lastStation.setDescription("안내도를 따라 <br> <b>외부</b>까지 엘리베이터를 이용하세요!");
 
-            for (int i = 1; i < subwayDetails.size()-1; i++) {
-                StationDetail stationDetail = subwayDetails.get(i);
+            for (int j = 1; j < subwayDetails.size()-1; j++) {
+                StationDetail stationDetail = subwayDetails.get(j);
                 if (stationDetail.getSubwayType().equals("환승")) {
-                    StationDetail nextStation = subwayDetails.get(i + 1);
+                    StationDetail nextStation = subwayDetails.get(j + 1);
                     stationDetail.setDirection(nextStation.getDirection());
+                    stationDetail.setBeforeLine(stationDetail.getLine());
+                    stationDetail.setAfterLine(nextStation.getLine());
                     stationDetail.setLine(String.format("%s→%s호선", stationDetail.getLine(), nextStation.getLine()));
                     stationDetail.setTitle(String.format("%s 안내도 (%s, %s %s) ", stationDetail.getName(), stationDetail.getSubwayType(), stationDetail.getLine() ,stationDetail.getDirection()));
                 }
             }
         }
+
 
         return allRouteDetails;
     }

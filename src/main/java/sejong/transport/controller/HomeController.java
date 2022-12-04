@@ -15,10 +15,15 @@ import sejong.transport.domain.etc.usertype.Pregnant;
 import sejong.transport.domain.etc.usertype.Wheel;
 import sejong.transport.service.DetailRoadService;
 import sejong.transport.service.RoadService;
+import sejong.transport.service.StationService;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static sejong.transport.domain.etc.UserTypeConst.pregnant;
+import static sejong.transport.domain.etc.UserTypeConst.elder;
+import static sejong.transport.domain.etc.UserTypeConst.wheel;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +31,7 @@ public class HomeController {
 
     private final RoadService roadService;
     private final DetailRoadService detailRoadService;
+    private final StationService stationService;
 
     @GetMapping("/")
     public String home(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
@@ -64,7 +70,9 @@ public class HomeController {
         SearchForm temp = new SearchForm();
         temp.setType(type);
         ResultDetail walkingDetail = detailRoadService.findWalkingDetail(start, end, temp.getUserType());
+        String mapHtml = detailRoadService.getHtml();
         model.addAttribute("routeDetail", walkingDetail);
+        model.addAttribute("mapHtml", mapHtml);
         return "walkingDetail";
 
     }
@@ -73,25 +81,41 @@ public class HomeController {
     public String detailBus(@RequestParam(name = "sId") Long startId, @RequestParam(name = "sLongitude") Double startLong,
                                 @RequestParam(name = "sLatitude") Double startLat, @RequestParam(name = "sName") String startName,
                                 @RequestParam(name = "eId") Long endId, @RequestParam(name = "eLongitude") Double endLong,
-                                @RequestParam(name = "eLatitude") Double endLat, @RequestParam(name = "eName") String endName,
+                                @RequestParam(name = "eLatitude") Double endLat, @RequestParam(name = "eName") String endName, @RequestParam(name = "userType") String type,
                             Model model) throws IOException, ParseException {
 
         Point start = new Point(startId, startName, startLong, startLat);
         Point end = new Point(endId, endName, endLong, endLat);
         ResultDetail busDetail = detailRoadService.findBusDetail(start, end);
         model.addAttribute("routeDetail", busDetail);
-        model.addAttribute("lowBus1", 13);
-        model.addAttribute("lowBus2", 21);
+        if (type.equals(wheel)) {
+            model.addAttribute("busType", "저상");
+            model.addAttribute("lowBus1", 13);
+            model.addAttribute("lowBus2", 21);
+        } else {
+            model.addAttribute("busType", "일반");
+            model.addAttribute("lowBus1", 8);
+            model.addAttribute("lowBus2", 17);
+        }
         return "busDetail";
 
     }
 
     @GetMapping("/detail/subway")
     public String detailSubway(@RequestParam(name = "name") String name, @RequestParam(name = "exitNum") String exitNum,
-                               @RequestParam(name = "subwaytype") String subwayType, @RequestParam(name = "direction") String direction) {
+                               @RequestParam(name = "subwaytype") String subwayType, @RequestParam(name = "direction") String direction,
+                               @RequestParam(name = "line") String line, @RequestParam(name = "beforeLine") String beforeLine, @RequestParam(name = "afterLine") String afterLine, Model model) {
+        if (subwayType.equals("환승")) {
+            TransferDto info = stationService.getTInfo(name, beforeLine, afterLine, direction);
+            model.addAttribute("stationInfo", info);
+        } else {
+            StationDto info = stationService.getInfo(name, exitNum, subwayType, direction, line);
+            model.addAttribute("stationInfo", info);
+        }
 
-        return "detail";
+        return "subwayDetail";
     }
+
 
 
     @Data

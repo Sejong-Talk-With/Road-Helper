@@ -12,6 +12,8 @@ public class StationDetail {
     public String title;
     public String description;
     public String line;
+    public String beforeLine;
+    public String afterLine;
     public String exitNum;
     public String subwayType; // type (승차, 하차 or transfer)
     public String direction; // direction (to go)
@@ -19,20 +21,21 @@ public class StationDetail {
     public int stationCnt;
     public Long duration;
 
-    public StationDetail(Route route, boolean check) {
+    public StationDetail(Route route, RouteDetail routeDetail, boolean check) {
         if (check) {
             this.name = route.getStart().getName();
             this.subwayType = "승차";
-            this.direction = route.getDirection().split("-")[1] + "행";
+            this.direction = route.getDirection().split("-")[1];
             this.description = "안내도를 따라 <br> <b>승강장</b>까지 엘리베이터를 이용하세요!";
+            this.exitNum = route.getInExitNum();
         } else {
             this.name = route.getEnd().getName();
             this.subwayType = "환승";
-            this.direction = route.getDirection().split("-")[1] + "행";
+            this.direction = route.getDirection().split("-")[1];
             this.description = "안내도를 따라 <br> <b>환승</b>까지 엘리베이터를 이용하세요!";
+            this.exitNum = route.getOutExitNum();
         }
-        this.exitNum = route.getExitNum();
         this.line = route.getLine().substring(0,1);
-        this.title = String.format("%s 안내도 (%s, %s호선 %s) ", this.name, this.subwayType, this.line , this.direction);
+        this.title = String.format("%s 안내도 (%s, %s호선 %s행) ", this.name, this.subwayType, this.line , this.direction);
     }
 }

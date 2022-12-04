@@ -22,7 +22,8 @@ public class Route {
     public String line;
     public String direction;
     public String type;
-    public String exitNum;
+    public String inExitNum;
+    public String outExitNum;
 
     // for bus
     public String num;

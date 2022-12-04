@@ -127,7 +127,7 @@
                     <ul class="list">
                         <li>
                             <a th:if="${path.trafficType=='bus'}" th:href="@{/detail/bus (sId=${path.route.start.id}, sLongitude=${path.route.start.longitude},  sLatitude=${path.route.start.latitude}, sName=${path.route.start.name},
-                                eId=${path.route.end.id}, eLongitude=${path.route.end.longitude},  eLatitude=${path.route.end.latitude}, eName=${path.route.end.name})}">
+                                eId=${path.route.end.id}, eLongitude=${path.route.end.longitude},  eLatitude=${path.route.end.latitude}, eName=${path.route.end.name}, userType=${userType.type})}">
                                 <div class="row back-color4 p-2 my-2 ani1 accordion title" >
                                     <div class="col-10 text-start">
                                         <p class="fw-bold text-truncate" th:text="${path.title}">출발지 -> 도착지</p>
@@ -171,20 +171,20 @@
                             </a>
 
                             <div class="show">
-                                <th:block th:each="subway :${path.subwayDetails}" >
+                                <a th:each="subway :${path.subwayDetails}"  th:href="@{/detail/subway (name=${subway.name}, exitNum=${subway.exitNum},  subwaytype=${subway.subwayType}, direction=${subway.direction}, line=${subway.line}, beforeLine=${subway.beforeLine}, afterLine=${subway.afterLine})}">
                                     <div class="row back-color2 p-2 my-2 ani1 accordion title ms-1" style="width: 95%";>
                                         <div class="col-10 text-start">
                                             <p class="fw-bold text-truncate" th:text="${subway.title}">출발지 -> 도착지</p>
                                             <p class="text-color2 fs-6 text-truncate" th:utext="${subway.description}">근처 엘레베이터를 이용하세요</p>
                                         </div>
 
-                                        <a class="col-2 align-self-center arrow_box justify-content-center m-0" href="">
+                                        <div class="col-2 align-self-center arrow_box justify-content-center m-0">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                                             </svg>
-                                        </a>
+                                        </div>
                                     </div>
-                                </th:block>
+                                </a>
                             </div>
                         </li>
 

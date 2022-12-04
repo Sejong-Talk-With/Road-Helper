@@ -4,6 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sejong.transport.domain.etc.*;
@@ -23,6 +29,33 @@ import java.util.List;
 public class DetailRoadService {
 
     private final StationRepository stationRepository;
+
+    public String getHtml() {
+        // 지도
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/static/chromedriver.exe");
+        ChromeOptions options = new ChromeOptions();
+        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        options.addArguments("headless");
+        WebDriver driver = new ChromeDriver(options);
+
+        String rt = "%2C1124891%2C516673%2C1124865";
+        String rt1 = "세종대학교+정문";
+        String rt2 = "어린이대공원역+7호선+1번출구";
+
+        String temp_url = "https://map.kakao.com/?map_type=TYPE_MAP&target=walk&rt=516568%2C1124891%2C516673%2C1124865&rt1=%EC%84%B8%EC%A2%85%EB%8C%80%ED%95%99%EA%B5%90+%EC%A0%95%EB%AC%B8&rt2=%EC%96%B4%EB%A6%B0%EC%9D%B4%EB%8C%80%EA%B3%B5%EC%9B%90%EC%97%AD+7%ED%98%B8%EC%84%A0+1%EB%B2%88%EC%B6%9C%EA%B5%AC&rtIds=194081591%2C10569629&rtTypes=PLACE%2CPLACE";
+        System.out.println("temp_url = " + temp_url);
+
+        String map_html = "";
+        try{
+            driver.get(temp_url);
+            WebElement tmp = driver.findElement(By.xpath("//*[@id=\'view.mapContainer\']/div[2]"));
+            map_html = tmp.getAttribute("innerHTML");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return map_html;
+    }
 
     public ResultDetail findWalkingDetail(Point start, Point end, UserType userType) throws IOException, ParseException {
         String src = String.format("https://map.naver.com/v5/api/dir/findwalk?lo=ko&st=1&o=all&l=%s,%s,%s,%s;%s,%s,%s,%s&lang=ko",
