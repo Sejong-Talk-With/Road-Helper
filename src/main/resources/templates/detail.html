@@ -81,17 +81,17 @@
         /*    animation: bannermove 5s linear infinite;*/
         /*}*/
 
-        @keyframes bannermove {
-            0% {
-                transform: translate(3%, 0%);
-            }
-            50% {
-                transform: translate(-20%, 0);
-            }
-            100% {
-                transform: translate(3%, 0);
-            }
-        }
+        /*@keyframes bannermove {*/
+        /*    0% {*/
+        /*        transform: translate(3%, 0%);*/
+        /*    }*/
+        /*    50% {*/
+        /*        transform: translate(-20%, 0);*/
+        /*    }*/
+        /*    100% {*/
+        /*        transform: translate(3%, 0);*/
+        /*    }*/
+        /*}*/
     </style>
 </head>
 
@@ -139,7 +139,7 @@
     <div class="h-25 w-100 overflow-scroll box col">
         <div class="container text-center">
             <th:block th:each="path :${detailRoutes}">
-                <div class="row back-color4 p-2 ani1" th:if="${(path.odd+1) % 2 != 0}">
+                <div class="row back-color4 p-2" th:if="${(path.odd+1) % 2 != 0}">
                     <div class="col-2 align-self-center">
                         <div th:text="${path.odd+1}"></div>
                     </div>
@@ -149,7 +149,7 @@
                     </div>
 
                 </div>
-                <div class="row back-color4 p-2 ani1" th:if="${(path.odd+1) % 2 == 0}">
+                <div class="row back-color4 p-2" th:if="${(path.odd+1) % 2 == 0}">
                     <div class="col-2 align-self-center">
                         <div th:text="${path.odd+1}"></div>
                     </div>
