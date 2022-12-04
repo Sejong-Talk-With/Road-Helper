@@ -36,13 +36,13 @@ public class RouteDetail {
         this.route = route;
         if (route instanceof Walking) {
             this.title = String.format("%s → %s", route.getStart().getName(), route.getEnd().getName());
-            this.description = String.format("근처 엘리베이터를 이용하세요! <br> 거리: %dm, 시간: %dm", route.getDistance(), route.getDuration());
+            this.description = String.format("근처 엘리베이터를 이용하세요! <br> 거리: %dm, 시간: %d분", route.getDistance(), route.getDuration());
             this.distance = route.getDistance();
             this.duration = route.getDuration();
             this.trafficType = "walking";
         } else if (route instanceof Bus) {
             this.title = String.format("%s → %s", route.getStart().getName(), route.getEnd().getName());
-            this.description = String.format("저상버스를 이용하세요! <br> 정류장 개수: %d개, 시간: %dm", route.getStationCnt(), route.getDuration());
+            this.description = String.format("저상버스를 이용하세요! <br> %d개 정류장, 시간: %d분", route.getStationCnt(), route.getDuration());
             this.distance = route.getDistance();
             this.duration = route.getDuration();
             this.stationCnt = route.getStationCnt();

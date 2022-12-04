@@ -32,9 +32,7 @@ public class RoadService {
         try{
             System.out.println("start = " + start);
             System.out.println("end = " + end);
-            originalRoutes = makeBestRoute(searchRoad(start, end, userType));
-
-
+            originalRoutes = searchRouteDetails(start, end, userType);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -42,76 +40,77 @@ public class RoadService {
         return originalRoutes;
     }
 
-    private List<RouteDetail> makeBestRoute(List<RouteDetail> allRoutes) throws IOException, ParseException {
-        for (RouteDetail route : allRoutes) {
-            if (route.getTrafficType().equals("walking")) {
-                Route point = route.getRoute();
-                Point start = point.getStart();
-                Point end = point.getEnd();
-                String startName = start.getName();
-                String endName = end.getName();
-                if (startName.endsWith("역")) {
-                    double minDistance = 1000;
-                    int exitNum = 0;
-                    List<Elevator> elevators = elevatorService.findByStationName(startName);
-                    Double latitude = end.getLatitude();
-                    Double longitude = end.getLongitude();
-                    for (Elevator elevator : elevators) {
-                        System.out.println("elevator = " + elevator.getStationName());
-                        double lat = elevator.getLatitude();
-                        System.out.println("can_lat = " + lat);
-                        double log = elevator.getLongitude();
-                        System.out.println("can_log = " + log);
-                        double x = Math.abs(latitude - lat);
-                        System.out.println("x = " + x);
-                        double y = Math.abs(longitude - log);
-                        System.out.println("y = " + y);
-                        if (minDistance > (x + y)) {
-                            minDistance = x + y;
-                            exitNum = elevator.getExitNum();
-                            System.out.println("minDistance = " + minDistance);
-                            System.out.println("exitNum = " + exitNum);
-                        }
-                    }
-                    String startPlace = startName + " " + String.valueOf(exitNum);
-                    System.out.println("startPlace = " + startPlace);
-                    Point newStart = searchPlace(startPlace);
-                    point.setStart(newStart);
-
-                } else if (endName.endsWith("역")) {
-                    double minDistance = 1000;
-                    int exitNum = 0;
-                    List<Elevator> elevators = elevatorService.findByStationName(endName);
-                    Double latitude = start.getLatitude();
-                    Double longitude = start.getLongitude();
-                    System.out.println("lat = "+latitude);
-                    System.out.println("long = "+longitude);
-                    for (Elevator elevator : elevators) {
-                        System.out.println("elevator = " + elevator.getStationName());
-                        double lat = elevator.getLatitude();
-                        System.out.println("can_lat = " + lat);
-                        double log = elevator.getLongitude();
-                        System.out.println("can_log = " + log);
-                        double x = Math.abs(latitude - lat);
-                        System.out.println("x = " + x);
-                        double y = Math.abs(longitude - log);
-                        System.out.println("y = " + y);
-                        if (minDistance > (x + y)) {
-                            minDistance = x + y;
-                            exitNum = elevator.getExitNum();
-                            System.out.println("minDistance = " + minDistance);
-                            System.out.println("exitNum = " + exitNum);
-                        }
-                    }
-                    String endPlace = endName + " " + String.valueOf(exitNum) + "번출구";
-                    System.out.println("endPlace = " + endPlace);
-                    Point newEnd = searchPlace(endPlace);
-                    point.setStart(newEnd);
+    private Route makeBestWalkingRoute(Route route, UserType userType) throws IOException, ParseException {
+        Point start = route.getStart();
+        Point end = route.getEnd();
+        String startName = start.getName();
+        String endName = end.getName();
+        if (startName.endsWith("역")) {
+            double minDistance = 1000;
+            int exitNum = 0;
+            List<Elevator> elevators = elevatorService.findByStationName(startName);
+            if (elevators.size() == 0) {
+                return route;
+            }
+            Double latitude = end.getLatitude();
+            Double longitude = end.getLongitude();
+            for (Elevator elevator : elevators) {
+                System.out.println("elevator = " + elevator.getStationName());
+                double lat = elevator.getLatitude();
+                System.out.println("can_lat = " + lat);
+                double log = elevator.getLongitude();
+                System.out.println("can_log = " + log);
+                double x = Math.abs(latitude - lat);
+                System.out.println("x = " + x);
+                double y = Math.abs(longitude - log);
+                System.out.println("y = " + y);
+                if (minDistance > (x + y)) {
+                    minDistance = x + y;
+                    exitNum = elevator.getExitNum();
+                    System.out.println("minDistance = " + minDistance);
+                    System.out.println("exitNum = " + exitNum);
                 }
             }
+            String startPlace = startName + " " + String.valueOf(exitNum);
+            System.out.println("startPlace = " + startPlace);
+            Point newStart = searchPlace(startPlace);
+            route.setStart(newStart);
+
+        } else if (endName.endsWith("역")) {
+            double minDistance = 1000;
+            int exitNum = 0;
+            List<Elevator> elevators = elevatorService.findByStationName(endName);
+            if (elevators.size() == 0) {
+                return route;
+            }
+            Double latitude = start.getLatitude();
+            Double longitude = start.getLongitude();
+            System.out.println("lat = "+latitude);
+            System.out.println("long = "+longitude);
+            for (Elevator elevator : elevators) {
+                System.out.println("elevator = " + elevator.getStationName());
+                double lat = elevator.getLatitude();
+                System.out.println("can_lat = " + lat);
+                double log = elevator.getLongitude();
+                System.out.println("can_log = " + log);
+                double x = Math.abs(latitude - lat);
+                System.out.println("x = " + x);
+                double y = Math.abs(longitude - log);
+                System.out.println("y = " + y);
+                if (minDistance > (x + y)) {
+                    minDistance = x + y;
+                    exitNum = elevator.getExitNum();
+                    System.out.println("minDistance = " + minDistance);
+                    System.out.println("exitNum = " + exitNum);
+                }
+            }
+            String endPlace = endName + " " + String.valueOf(exitNum) + "번출구";
+            System.out.println("endPlace = " + endPlace);
+            Point newEnd = searchPlace(endPlace);
+            route.setEnd(newEnd);
         }
 
-        return allRoutes;
+        return route;
     }
 
     // 장소 검색 (출발지 검색, 도착지 검색)
@@ -134,7 +133,7 @@ public class RoadService {
     }
 
     // 길 찾기
-    private List<RouteDetail> searchRoad(Point start, Point end, UserType userType) throws IOException, ParseException {
+    private List<RouteDetail> searchRouteDetails(Point start, Point end, UserType userType) throws IOException, ParseException {
         String src = String.format("https://map.naver.com/v5/api/transit/directions/point-to-point?start=%s,%s,placeid=%s,name=%s&goal=%s,%s,placeid=%s,name=%s&crs=EPSG:4326&mode=STATIC&lang=ko&includeDetailOperation=true",
                 start.longitude, start.latitude, start.id, start.encodedName,
                 end.longitude, end.latitude, end.id, end.encodedName
@@ -207,8 +206,8 @@ public class RoadService {
         List<StationDetail> subwayList = new ArrayList<>();
         boolean check = Boolean.TRUE;
         for (Route route : allRoutes) {
-            RouteDetail routeDetail = new RouteDetail(route);
             if (route instanceof Subway) {
+                RouteDetail routeDetail = new RouteDetail(route);
                 if (check) {
                     subway = routeDetail;
                     subwayList = subway.getSubwayDetails();
@@ -227,6 +226,13 @@ public class RoadService {
                     subwayList.add(new StationDetail(route, false));
                 }
             } else {
+                if (route instanceof Walking) {
+                    Route route1 = makeBestWalkingRoute(route, userType);
+                    Route newRoute = searchWalk(route1.getStart(), route1.getEnd(), userType);
+                    RouteDetail routeDetail = new RouteDetail(newRoute);
+                } else {
+                    RouteDetail routeDetail = new RouteDetail(route);
+                }
                 allRouteDetails.add(new RouteDetail(route));
             }
         }
@@ -251,12 +257,20 @@ public class RoadService {
         return allRouteDetails;
     }
 
-
-    public List<RouteDetail> findEachRouteDetail(List<Route> allRoutes) {
-        List<RouteDetail> allRoutesDetail = new ArrayList<>();
-        for (Route route : allRoutes) {
-            allRoutesDetail.add(new RouteDetail(route));
-        }
-        return allRoutesDetail;
+    private Route searchWalk(Point start, Point end, UserType userType) throws IOException, ParseException {
+        String src = String.format("https://map.naver.com/v5/api/dir/findwalk?lo=ko&st=1&o=all&l=%s,%s,%s,%s;%s,%s,%s,%s&lang=ko",
+                start.longitude, start.latitude, start.encodedName, start.id,
+                end.longitude, end.latitude, end.encodedName, end.id
+        );
+        URL url = new URL(src);
+        BufferedReader bf;
+        bf = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
+        JSONParser jsonParser = new JSONParser();
+        String result = bf.readLine();
+        JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
+        List<JSONObject> routes = (List<JSONObject>) jsonObject.get("routes");
+        JSONObject route = routes.get(0);
+        JSONObject summary = (JSONObject) route.get("summary");
+        return new Walking(summary, start, end, userType);
     }
 }

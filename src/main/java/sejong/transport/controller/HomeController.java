@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import sejong.transport.domain.etc.*;
 import sejong.transport.domain.etc.traffictype.Bus;
 import sejong.transport.domain.etc.traffictype.Subway;
@@ -38,7 +36,7 @@ public class HomeController {
     public String homeSearch(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) throws IOException, ParseException {
         Point start = roadService.searchPlace(searchForm.getStart());
         Point end = roadService.searchPlace(searchForm.getEnd());
-        List<RouteDetail> allRoutes = roadService.findAllRoutes(start, end, searchForm.userType);
+        List<RouteDetail> allRoutes = roadService.findAllRoutes(start, end, searchForm.getUserType());
         model.addAttribute("start", start.name);
         model.addAttribute("end", end.name);
         model.addAttribute("optimal", "15:00");
@@ -51,11 +49,16 @@ public class HomeController {
         return "result";
     }
 
-    @GetMapping("/detail")
-    public String detailSearch(@ModelAttribute(name = "searchForm") SearchForm searchForm, Model model) {
+    @GetMapping("/detail/walking")
+    public String detailSearch(@RequestParam(name = "sId") Long startId, @RequestParam(name = "sLongitude") Double startLong,
+                               @RequestParam(name = "sLatitude") Double startLat, @RequestParam(name = "sName") String startName,
+                               @RequestParam(name = "eId") Long endId, @RequestParam(name = "eLongitude") Double endLong,
+                               @RequestParam(name = "eLatitude") Double endLat, @RequestParam(name = "eName") String endName, Model model) {
 
-        Route singleRoutes = new Route("세종대학교 정문","어린이대공원역 1번 출구","근처 엘레베이터를 이용하세요",50,0,10);
-        model.addAttribute("singleRoutes", singleRoutes);
+
+
+
+//        model.addAttribute("singleRoutes", singleRoutes);
 
         List<Route> allRoutes = new ArrayList<>();
         for (int i = 0; i < 4; i++) {

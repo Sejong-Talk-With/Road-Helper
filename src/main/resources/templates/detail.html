@@ -69,61 +69,66 @@
             margin: auto;
         }
 
-        #slider {
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-        }
+        /*#slider {*/
+        /*    overflow: hidden;*/
+        /*    position: relative;*/
+        /*    width: 100%;*/
+        /*}*/
 
-        .image-box {
-            display: flex;
-            flex-wrap: nowrap;
-            animation: bannermove 5s linear infinite;
-        }
+        /*.image-box {*/
+        /*    display: flex;*/
+        /*    flex-wrap: nowrap;*/
+        /*    animation: bannermove 5s linear infinite;*/
+        /*}*/
 
-        @keyframes bannermove {
-            0% {
-                transform: translate(3%, 0%);
-            }
-            50% {
-                transform: translate(-20%, 0);
-            }
-            100% {
-                transform: translate(3%, 0);
-            }
-        }
+        /*@keyframes bannermove {*/
+        /*    0% {*/
+        /*        transform: translate(3%, 0%);*/
+        /*    }*/
+        /*    50% {*/
+        /*        transform: translate(-20%, 0);*/
+        /*    }*/
+        /*    100% {*/
+        /*        transform: translate(3%, 0);*/
+        /*    }*/
+        /*}*/
     </style>
 </head>
 
 <body class="h-100">
 <div class="h-100 w-100 back-color1 p-4">
     <nav class="navbar navbar-expand-lg justify-content-between w-100 mb-2">
-        <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="rgb(150,100,100)"
-                 class="bi bi-chevron-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+        <button type="button" class="border-0 bg-transparent" onclick="history.back()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="rgb(150,100,100)" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
             </svg>
-        </div>
-        <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="rgb(150,100,100)" class="bi bi-house"
-                 viewBox="0 0 16 16">
+        </button>
+        <th:block th:each="path :${singleRoutes}">
+            <div class="d-sm-flex justify-content-center" th:if="${path.odd==0}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="rgb(150,100,100)" class="bi bi-train-front-fill" viewBox="0 0 20 20">
+                    <path d="M10.621.515C8.647.02 7.353.02 5.38.515c-.924.23-1.982.766-2.78 1.22C1.566 2.322 1 3.432 1 4.582V13.5A2.5 2.5 0 0 0 3.5 16h9a2.5 2.5 0 0 0 2.5-2.5V4.583c0-1.15-.565-2.26-1.6-2.849-.797-.453-1.855-.988-2.779-1.22ZM6.5 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1Zm-2 2h7A1.5 1.5 0 0 1 13 5.5v2A1.5 1.5 0 0 1 11.5 9h-7A1.5 1.5 0 0 1 3 7.5v-2A1.5 1.5 0 0 1 4.5 4Zm.5 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-3-1a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM4 5.5a.5.5 0 0 1 .5-.5h3v3h-3a.5.5 0 0 1-.5-.5v-2ZM8.5 8V5h3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-3Z"/>
+                </svg>
+            </div>
+        </th:block>
+        <button type="button" class="border-0 bg-transparent" onclick="location.href='/'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="rgb(150,100,100)" class="bi bi-house" viewBox="0 0 16 16">
                 <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
             </svg>
-        </div>
+        </button>
     </nav>
 
     <div id="slider">
         <div class="image-box">
             <div class="w-100">
-                <p class="text-center text-color1 fs-5 fw-bold my-3 text-nowrap"
+                <p class="text-center text-color1 fs-5 fw-bold my-3 text-nowrap text-truncate"
                    th:text="|${singleRoutes.start} -> ${singleRoutes.end}|">출발지 -> 도착지</p>
             </div>
         </div>
     </div>
 
-    <div class="w-100 h-50 overflow-scroll box">
-        <img src="https://map2.daumcdn.net/map_2d_hd/2209kdm/L2/3983/1846.png">
+    <div class="w-100 h-50 box overflow-scroll">
+        <!--        <img src="https://map2.daumcdn.net/map_2d_hd/2209kdm/L2/3983/1846.png">-->
+        <img src="C:\Users\jaehoon\IdeaProjects\Road-Helper\src\main\resources\image\example.png">
     </div>
 
     <div class="row my-2">
@@ -133,16 +138,26 @@
 
     <div class="h-25 w-100 overflow-scroll box col">
         <div class="container text-center">
-            <th:block th:each="path :${allRoutes}">
-                <div class="row back-color4 p-2 my-2 ani1" th:if="${path.odd % 2 >= 0}">
-                    <div class="col-10 text-start">
-                        <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|">출발지 -> 도착지</p>
-                        <p class="text-color2 fs-6 text-truncate" th:text="${path.description}">근처 엘레베이터를 이용하세요</p>
-                        <p class="fs-6 text-truncate" th:text="|거리: ${path.distance} m|">0</p>
-                    </div>
+            <th:block th:each="path :${detailRoutes}">
+                <div class="row back-color4 p-2" th:if="${(path.odd+1) % 2 != 0}">
                     <div class="col-2 align-self-center">
                         <div th:text="${path.odd+1}"></div>
                     </div>
+                    <div class="col-10 text-start">
+                        <p class="fw-bold text-truncate" th:text="|${path.start} -> ${path.end}|">출발지 -> 도착지</p>
+                        <p class="text-color2 fs-6 text-truncate" th:text="| ${path.distance}m 이동, ${path.description}|">0분 소요</p>
+                    </div>
+
+                </div>
+                <div class="row back-color4 p-2" th:if="${(path.odd+1) % 2 == 0}">
+                    <div class="col-2 align-self-center">
+                        <div th:text="${path.odd+1}"></div>
+                    </div>
+                    <div class="col-10 text-start">
+                        <p class="fw-bold text-truncate" th:text="|${path.start}|">출발지</p>
+                        <p class="text-color2 fs-6 text-truncate" th:text="| ${path.distance}m 이동, ${path.description}|">0분 소요</p>
+                    </div>
+
                 </div>
 
             </th:block>

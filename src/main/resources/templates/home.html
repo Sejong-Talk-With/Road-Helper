@@ -41,6 +41,8 @@
                 width: 100%;
             }
         }
+
+
     </style>
 </head>
 
@@ -48,16 +50,16 @@
 <div class="h-100 w-100 back-color1 p-4" >
 
     <nav class="navbar navbar-expand-lg justify-content-between w-100 mb-2">
-        <div>
+        <button type="button" class="border-0 bg-transparent" onclick="history.back()">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="rgb(150,100,100)" class="bi bi-chevron-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
             </svg>
-        </div>
-        <div>
+        </button>
+        <button type="button" class="border-0 bg-transparent" onclick="location.href='/'">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="rgb(150,100,100)" class="bi bi-house" viewBox="0 0 16 16">
                 <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
             </svg>
-        </div>
+        </button>
     </nav>
 
     <div class="text-center">
@@ -103,11 +105,11 @@
             <div class="d-sm-flex justify-content-center w-100 mb-3 container">
                 <div class="row">
                     <div class="input-group flex-nowrap col">
-                        <input th:field="*{time1}" type="text" class="form-control" aria-label="Username" aria-describedby="addon-wrapping">
+                        <input th:field="*{time1}" type="text" class="form-control text-center" onblur="this.placeholder='00:00'" onfocus="this.placeholder=''" placeholder="00:00" aria-label="Username" aria-describedby="addon-wrapping">
                     </div>
-                    <div class="text-color1 fs-5 m-0 w-25 col">~</div>
+                    <div class="text-color1 fs-5 m-0" style="width: fit-content;">~</div>
                     <div class="input-group flex-nowrap col">
-                        <input th:field="*{time2}" type="text" class="form-control" aria-label="Username" aria-describedby="addon-wrapping">
+                        <input th:field="*{time2}" type="text" class="form-control text-center" onblur="this.placeholder='00:00'" onfocus="this.placeholder=''" placeholder="00:00" aria-label="Username" aria-describedby="addon-wrapping">
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.catalina.User;
 import org.json.simple.JSONObject;
 import sejong.transport.domain.etc.Point;
 import sejong.transport.domain.etc.Route;
@@ -41,7 +42,10 @@ public class Walking extends Route {
         this.duration = Math.round((Long) json.get("duration") * userType.getRate());
     }
 
-    public Walking() {
-
+    public Walking(JSONObject json, Point start, Point end, UserType userType) {
+        this.start = start;
+        this.end = end;
+        this.distance = (Long) json.get("distance");
+        this.duration = Math.round((Long) json.get("duration") * userType.getRate());
     }
 }
