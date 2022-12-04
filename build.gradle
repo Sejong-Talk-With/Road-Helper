@@ -43,6 +43,11 @@ dependencies {
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0"
 
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	// 크롤링
+	implementation 'org.jsoup:jsoup:1.14.2'
+	implementation 'org.seleniumhq.selenium:selenium-java:4.6.0'
+
+
 }
 
 tasks.named('test') {
