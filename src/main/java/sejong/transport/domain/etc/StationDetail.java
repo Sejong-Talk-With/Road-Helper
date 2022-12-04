@@ -12,6 +12,7 @@ public class StationDetail {
     public String title;
     public String description;
     public String line;
+    public String exitNum;
     public String subwayType; // type (승차, 하차 or transfer)
     public String direction; // direction (to go)
 
@@ -30,6 +31,7 @@ public class StationDetail {
             this.direction = route.getDirection().split("-")[1] + "행";
             this.description = "안내도를 따라 <br> <b>환승</b>까지 엘리베이터를 이용하세요!";
         }
+        this.exitNum = route.getExitNum();
         this.line = route.getLine().substring(0,1);
         this.title = String.format("%s 안내도 (%s, %s호선 %s) ", this.name, this.subwayType, this.line , this.direction);
     }

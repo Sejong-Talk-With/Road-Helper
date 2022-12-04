@@ -119,14 +119,14 @@
         <div class="image-box">
             <div class="w-100">
                 <p class="text-center text-color1 fs-5 fw-bold my-3 text-nowrap text-truncate"
-                   th:text="|${routeDetail.start} -> ${routeDetail.end}|">출발지 -> 도착지</p>
+                   th:text="|${routeDetail.start} → ${routeDetail.end}|">출발지 -> 도착지</p>
             </div>
         </div>
     </div>
 
     <div class="w-100 h-50 box overflow-scroll">
         <!--        <img src="https://map2.daumcdn.net/map_2d_hd/2209kdm/L2/3983/1846.png">-->
-        <img src="/">
+        <img th:src="${routeDetail.imgSrc}">
     </div>
 
     <div class="row my-2">

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sejong.transport.domain.entity.Elevator;
 import sejong.transport.domain.etc.*;
 
@@ -22,6 +23,7 @@ import sejong.transport.domain.etc.traffictype.Subway;
 import sejong.transport.domain.etc.traffictype.Walking;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RoadService {
 
@@ -71,6 +73,7 @@ public class RoadService {
                     System.out.println("exitNum = " + exitNum);
                 }
             }
+            route.setExitNum(String.valueOf(exitNum));
             String startPlace = startName + " " + String.valueOf(exitNum);
             System.out.println("startPlace = " + startPlace);
             Point newStart = searchPlace(startPlace);
@@ -104,6 +107,7 @@ public class RoadService {
                     System.out.println("exitNum = " + exitNum);
                 }
             }
+            route.setExitNum(String.valueOf(exitNum));
             String endPlace = endName + " " + String.valueOf(exitNum) + "번출구";
             System.out.println("endPlace = " + endPlace);
             Point newEnd = searchPlace(endPlace);

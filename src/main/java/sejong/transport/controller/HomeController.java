@@ -53,7 +53,7 @@ public class HomeController {
     }
 
     @GetMapping("/detail/walking")
-    public String detailSearch(@RequestParam(name = "sId") Long startId, @RequestParam(name = "sLongitude") Double startLong,
+    public String detailWalking(@RequestParam(name = "sId") Long startId, @RequestParam(name = "sLongitude") Double startLong,
                                @RequestParam(name = "sLatitude") Double startLat, @RequestParam(name = "sName") String startName,
                                @RequestParam(name = "eId") Long endId, @RequestParam(name = "eLongitude") Double endLong,
                                @RequestParam(name = "eLatitude") Double endLat, @RequestParam(name = "eName") String endName,
@@ -65,8 +65,32 @@ public class HomeController {
         temp.setType(type);
         ResultDetail walkingDetail = detailRoadService.findWalkingDetail(start, end, temp.getUserType());
         model.addAttribute("routeDetail", walkingDetail);
-        return "detail";
+        return "walkingDetail";
 
+    }
+
+    @GetMapping("/detail/bus")
+    public String detailBus(@RequestParam(name = "sId") Long startId, @RequestParam(name = "sLongitude") Double startLong,
+                                @RequestParam(name = "sLatitude") Double startLat, @RequestParam(name = "sName") String startName,
+                                @RequestParam(name = "eId") Long endId, @RequestParam(name = "eLongitude") Double endLong,
+                                @RequestParam(name = "eLatitude") Double endLat, @RequestParam(name = "eName") String endName,
+                            Model model) throws IOException, ParseException {
+
+        Point start = new Point(startId, startName, startLong, startLat);
+        Point end = new Point(endId, endName, endLong, endLat);
+        ResultDetail busDetail = detailRoadService.findBusDetail(start, end);
+        model.addAttribute("routeDetail", busDetail);
+        model.addAttribute("lowBus1", 13);
+        model.addAttribute("lowBus2", 21);
+        return "busDetail";
+
+    }
+
+    @GetMapping("/detail/subway")
+    public String detailSubway(@RequestParam(name = "name") String name, @RequestParam(name = "exitNum") String exitNum,
+                               @RequestParam(name = "subwaytype") String subwayType, @RequestParam(name = "direction") String direction) {
+
+        return "detail";
     }
 
 
