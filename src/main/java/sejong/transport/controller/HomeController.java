@@ -42,13 +42,9 @@ public class HomeController {
         model.addAttribute("end", end.name);
         model.addAttribute("optimal", "15:00");
         model.addAttribute("allRoutes", allRoutes);
+
         for (RouteDetail allRoute : allRoutes) {
-            List<StationDetail> subwayDetails = allRoute.getSubwayDetails();
-            if (subwayDetails.size() != 0) {
-                for (StationDetail subwayDetail : subwayDetails) {
-                    System.out.println("subwayDetail = " + subwayDetail);
-                }
-            }
+            System.out.println("allRoute = " + allRoute);
         }
 
         return "result";

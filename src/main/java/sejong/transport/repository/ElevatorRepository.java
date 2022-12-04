@@ -4,7 +4,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import sejong.transport.domain.entity.Elevator;
-import sejong.transport.domain.entity.QElevator;
 
 import java.util.List;
 

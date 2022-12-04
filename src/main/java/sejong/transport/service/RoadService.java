@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
+import sejong.transport.domain.entity.Elevator;
 import sejong.transport.domain.etc.*;
 
 import java.io.BufferedReader;
@@ -31,13 +32,86 @@ public class RoadService {
         try{
             System.out.println("start = " + start);
             System.out.println("end = " + end);
-            originalRoutes = searchRoad(start, end, userType);
+            originalRoutes = makeBestRoute(searchRoad(start, end, userType));
+
 
         }catch(Exception e){
             e.printStackTrace();
         }
 
         return originalRoutes;
+    }
+
+    private List<RouteDetail> makeBestRoute(List<RouteDetail> allRoutes) throws IOException, ParseException {
+        for (RouteDetail route : allRoutes) {
+            if (route.getTrafficType().equals("walking")) {
+                Route point = route.getRoute();
+                Point start = point.getStart();
+                Point end = point.getEnd();
+                String startName = start.getName();
+                String endName = end.getName();
+                if (startName.endsWith("역")) {
+                    double minDistance = 1000;
+                    int exitNum = 0;
+                    List<Elevator> elevators = elevatorService.findByStationName(startName);
+                    Double latitude = end.getLatitude();
+                    Double longitude = end.getLongitude();
+                    for (Elevator elevator : elevators) {
+                        System.out.println("elevator = " + elevator.getStationName());
+                        double lat = elevator.getLatitude();
+                        System.out.println("can_lat = " + lat);
+                        double log = elevator.getLongitude();
+                        System.out.println("can_log = " + log);
+                        double x = Math.abs(latitude - lat);
+                        System.out.println("x = " + x);
+                        double y = Math.abs(longitude - log);
+                        System.out.println("y = " + y);
+                        if (minDistance > (x + y)) {
+                            minDistance = x + y;
+                            exitNum = elevator.getExitNum();
+                            System.out.println("minDistance = " + minDistance);
+                            System.out.println("exitNum = " + exitNum);
+                        }
+                    }
+                    String startPlace = startName + " " + String.valueOf(exitNum);
+                    System.out.println("startPlace = " + startPlace);
+                    Point newStart = searchPlace(startPlace);
+                    point.setStart(newStart);
+
+                } else if (endName.endsWith("역")) {
+                    double minDistance = 1000;
+                    int exitNum = 0;
+                    List<Elevator> elevators = elevatorService.findByStationName(endName);
+                    Double latitude = start.getLatitude();
+                    Double longitude = start.getLongitude();
+                    System.out.println("lat = "+latitude);
+                    System.out.println("long = "+longitude);
+                    for (Elevator elevator : elevators) {
+                        System.out.println("elevator = " + elevator.getStationName());
+                        double lat = elevator.getLatitude();
+                        System.out.println("can_lat = " + lat);
+                        double log = elevator.getLongitude();
+                        System.out.println("can_log = " + log);
+                        double x = Math.abs(latitude - lat);
+                        System.out.println("x = " + x);
+                        double y = Math.abs(longitude - log);
+                        System.out.println("y = " + y);
+                        if (minDistance > (x + y)) {
+                            minDistance = x + y;
+                            exitNum = elevator.getExitNum();
+                            System.out.println("minDistance = " + minDistance);
+                            System.out.println("exitNum = " + exitNum);
+                        }
+                    }
+                    String endPlace = endName + " " + String.valueOf(exitNum) + "번출구";
+                    System.out.println("endPlace = " + endPlace);
+                    Point newEnd = searchPlace(endPlace);
+                    point.setStart(newEnd);
+                }
+            }
+        }
+
+        return allRoutes;
     }
 
     // 장소 검색 (출발지 검색, 도착지 검색)
