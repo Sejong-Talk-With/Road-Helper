@@ -70,9 +70,7 @@ public class HomeController {
         SearchForm temp = new SearchForm();
         temp.setType(type);
         ResultDetail walkingDetail = detailRoadService.findWalkingDetail(start, end, temp.getUserType());
-        String mapHtml = detailRoadService.getHtml();
         model.addAttribute("routeDetail", walkingDetail);
-        model.addAttribute("mapHtml", mapHtml);
         return "walkingDetail";
 
     }

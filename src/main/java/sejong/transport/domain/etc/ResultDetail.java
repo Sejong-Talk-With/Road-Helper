@@ -23,25 +23,14 @@ public class ResultDetail {
     public List<DetailElements> detailInfos = new ArrayList<>();
 
     public ResultDetail(Point start, Point end, Long distance, Long duration, List<DetailElements> infos) { // Walking
-        this.imgSrc = "/stations/station/KakaoTalk_20221121_014443950.gif";
+        this.title = start.getName() + " → " + end.getName();
+        this.imgSrc = "/walking/"+this.title +".jpg";
         this.start = start.getName();
         this.end = end.getName();
         this.distance = distance;
         this.duration = duration;
         this.detailInfos = infos;
     }
-
-    public ResultDetail(String stationName, String subwayType, String direction, List<DetailElements> infos) {
-        this.title = stationName + String.format(" 안내도(%s, %s)",subwayType,direction);
-        this.imgSrc = '/'+stationName+"-"+subwayType;
-        this.detailInfos = infos;
-    }
-
-/*    public ResultDetail(StationImg station, String subwayType, String direction, List<DetailElements> infos) { // Subway
-        this.title = station.getStationName() + String.format(" 안내도(%s, %s)",subwayType,direction);
-        this.imgSrc = station.getUrl();
-        this.detailInfos = infos;
-   }*/
 
     public ResultDetail() {
 

@@ -18,6 +18,8 @@ import sejong.transport.repository.StationRepository;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -29,33 +31,6 @@ import java.util.List;
 public class DetailRoadService {
 
     private final StationRepository stationRepository;
-
-    public String getHtml() {
-        // 지도
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/static/chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        options.addArguments("headless");
-        WebDriver driver = new ChromeDriver(options);
-
-        String rt = "%2C1124891%2C516673%2C1124865";
-        String rt1 = "세종대학교+정문";
-        String rt2 = "어린이대공원역+7호선+1번출구";
-
-        String temp_url = "https://map.kakao.com/?map_type=TYPE_MAP&target=walk&rt=516568%2C1124891%2C516673%2C1124865&rt1=%EC%84%B8%EC%A2%85%EB%8C%80%ED%95%99%EA%B5%90+%EC%A0%95%EB%AC%B8&rt2=%EC%96%B4%EB%A6%B0%EC%9D%B4%EB%8C%80%EA%B3%B5%EC%9B%90%EC%97%AD+7%ED%98%B8%EC%84%A0+1%EB%B2%88%EC%B6%9C%EA%B5%AC&rtIds=194081591%2C10569629&rtTypes=PLACE%2CPLACE";
-        System.out.println("temp_url = " + temp_url);
-
-        String map_html = "";
-        try{
-            driver.get(temp_url);
-            WebElement tmp = driver.findElement(By.xpath("//*[@id=\'view.mapContainer\']/div[2]"));
-            map_html = tmp.getAttribute("innerHTML");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return map_html;
-    }
 
     public ResultDetail findWalkingDetail(Point start, Point end, UserType userType) throws IOException, ParseException {
         String src = String.format("https://map.naver.com/v5/api/dir/findwalk?lo=ko&st=1&o=all&l=%s,%s,%s,%s;%s,%s,%s,%s&lang=ko",
@@ -117,6 +92,7 @@ public class DetailRoadService {
         }
         ResultDetail resultDetail = new ResultDetail();
         resultDetail.setTitle(String.format("%s번 버스 (%s 정류장)", busName, stations.get(0).get("name")));
+        resultDetail.setImgSrc("/bus/"+resultDetail.getTitle()+".jpg");
         resultDetail.setDuration(duration);
         resultDetail.setStationCnt(stationCnt);
         resultDetail.setDetailInfos(detailElementsList);
