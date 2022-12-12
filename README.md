@@ -33,6 +33,6 @@
 ### Demo Version  
   ![ProtoType](https://user-images.githubusercontent.com/72644713/203085881-c2f2288a-224c-4d15-a21e-d9b138ada431.png)
 ### PT
-  - PDF(light) : [view](https://github.com/Sejong-Talk-With/Road-Helper/blob/master/Final_PT.pdf)
-  - PPT(origin) : [원본 PPT(Download)](https://github.com/Sejong-Talk-With/Road-Helper/files/10206980/default.pptx)
+  - PDF(light) : [제품설명 PDF(View)](https://github.com/Sejong-Talk-With/Road-Helper/blob/master/Final_PT.pdf)
+  - PPT(origin) : [제품설명 PPT(Download)](https://github.com/Sejong-Talk-With/Road-Helper/files/10206980/default.pptx)
 
