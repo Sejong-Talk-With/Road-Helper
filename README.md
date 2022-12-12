@@ -32,3 +32,7 @@
       - Naver 지도앱 연동 결과 그대로 표현
 ### Demo Version  
   ![ProtoType](https://user-images.githubusercontent.com/72644713/203085881-c2f2288a-224c-4d15-a21e-d9b138ada431.png)
+### PT
+  - PDF(light) : ![Light 버전(View)](https://github.com/Sejong-Talk-With/Road-Helper/files/10207009/-.-FINAL.pdf)
+  - PPT(origin) : [원본 PPT(Download)](https://github.com/Sejong-Talk-With/Road-Helper/files/10206980/default.pptx)
+
