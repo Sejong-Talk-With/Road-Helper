@@ -31,7 +31,7 @@
   7. 버스 하차 지점 → 서울 아산병원 (걸어서 이동)
       - Naver 지도앱 연동 결과 그대로 표현
 ### Demo Version  
-  ![ProtoType](https://user-images.githubusercontent.com/72644713/203085881-c2f2288a-224c-4d15-a21e-d9b138ada431.png)
+  ![ProtoType](https://user-images.githubusercontent.com/72644713/207026320-5f0d3e7a-70c3-4663-8f2a-236b71235fc5.jpg)
 ### PT
   - PDF(light) : [제품설명 PDF(View)](https://github.com/Sejong-Talk-With/Road-Helper/blob/master/Final_PT.pdf)
   - PPT(origin) : [제품설명 PPT(Download)](https://github.com/Sejong-Talk-With/Road-Helper/files/10206980/default.pptx)
