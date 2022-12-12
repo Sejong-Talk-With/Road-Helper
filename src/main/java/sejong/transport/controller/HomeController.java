@@ -47,7 +47,7 @@ public class HomeController {
         List<RouteDetail> allRoutes = roadService.findAllRoutes(start, end, searchForm.getUserType());
         model.addAttribute("start", start.name);
         model.addAttribute("end", end.name);
-        model.addAttribute("optimal", "15:00");
+        model.addAttribute("optimal", roadService.getOptimalTime(searchForm.getTime1(), searchForm.getTime2()));
         model.addAttribute("allRoutes", allRoutes);
         model.addAttribute("userType", searchForm.getUserType());
 
@@ -86,15 +86,19 @@ public class HomeController {
         Point end = new Point(endId, endName, endLong, endLat);
         ResultDetail busDetail = detailRoadService.findBusDetail(start, end);
         model.addAttribute("routeDetail", busDetail);
+        int[] busTimes;
         if (type.equals(wheel)) {
             model.addAttribute("busType", "저상");
-            model.addAttribute("lowBus1", 13);
-            model.addAttribute("lowBus2", 21);
+            busTimes = detailRoadService.getBusTime(start, end, 0);
         } else {
             model.addAttribute("busType", "일반");
-            model.addAttribute("lowBus1", 8);
-            model.addAttribute("lowBus2", 17);
+            busTimes = detailRoadService.getBusTime(start, end, 1);
         }
+        if (type.equals(wheel)) {
+
+        }
+        model.addAttribute("lowBus1", busTimes[0]);
+        model.addAttribute("lowBus2", busTimes[1]);
         return "busDetail";
 
     }

@@ -8,9 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sejong.transport.domain.entity.Elevator;
 import sejong.transport.domain.etc.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -289,4 +287,27 @@ public class RoadService {
         JSONObject summary = (JSONObject) route.get("summary");
         return new Walking(summary, start, end, userType);
     }
+
+    public String getOptimalTime(String startTime, String endTime) throws IOException {
+        FileInputStream file = new FileInputStream("C:\\Users\\bob8d\\OneDrive\\Desktop\\transport\\src\\main\\resources\\static\\stations\\etc\\서울교통공사_지하철혼잡도정보_20211231.csv"); // 파일 읽기
+        byte[] bytes = file.readAllBytes();
+        byte temp = 0;
+        for (byte aByte : bytes) {
+            temp += aByte;
+        }
+
+        String start = startTime.split(":")[0];
+        String end = endTime.split(":")[0];
+        int startInt = Integer.parseInt(start);
+        int endInt = Integer.parseInt(end);
+        int resultHour = (startInt + endInt) / 2;
+        String result = resultHour + ":";
+        if (resultHour % 2 == 0) {
+            result += "30";
+        } else {
+            result += "00";
+        }
+        return result;
+    }
+
 }

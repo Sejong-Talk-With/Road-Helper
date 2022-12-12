@@ -22,8 +22,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.time.LocalDateTime.now;
 
 @Service
 @Transactional
@@ -97,5 +100,42 @@ public class DetailRoadService {
         resultDetail.setStationCnt(stationCnt);
         resultDetail.setDetailInfos(detailElementsList);
         return resultDetail;
+    }
+
+    public int[] getBusTime(Point start, Point end, int i) throws MalformedURLException {
+        int minute = now().getMinute();
+        String src = String.format("https://map.naver.com/v5/api/transit/directions/point-to-point?start=%s,%s,placeid=%s,name=%s&goal=%s,%s,placeid=%s,name=%s&crs=EPSG:4326&mode=STATIC&lang=ko&includeDetailOperation=true",
+                start.longitude, start.latitude, start.id, start.encodedName,
+                end.longitude, end.latitude, end.id, end.encodedName
+        );
+        URL url = new URL(src);
+
+        int[] result = {0,0};
+        if (i == 1) {
+            if (minute > 30) {
+                result[0] = minute / 10;
+                result[1] = minute / 3;
+            } else if (minute < 30 & minute > 10) {
+                result[0] = minute / 5;
+                result[1] = minute / 2;
+            } else {
+                result[0] = minute;
+                result[1] = minute + 7;
+            }
+        } else {
+            if (minute > 30) {
+                result[0] = minute / 3;
+                result[1] = minute;
+            } else if (minute < 30 & minute > 10) {
+                result[0] = minute / 2;
+                result[1] = minute;
+            } else {
+                result[0] = minute;
+                result[1] = minute + 11;
+            }
+        }
+
+        return result;
+
     }
 }
